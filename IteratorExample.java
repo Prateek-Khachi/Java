@@ -8,7 +8,7 @@ public class IteratorExample {
         List al = new ArrayList<>();
 
         al.add("Raghu Bhai");
-        al.add("Jindal  Bhai");
+        al.add("Jindal Bhai");
         al.add("Prince Bhai");
 
         ListIterator itr = al.listIterator();

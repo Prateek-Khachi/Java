@@ -4,85 +4,72 @@ import java.util.*;
 public class Test {
     public static class Node{
         public int data;
-        public Node next;
-        public Node prev;
-        Node(int d){
+        Node left;
+        Node right;
+        public Node(int d){
             this.data = d;
-            this.next = null;
-            this.prev = null;
+            this.left = null;
+            this.right = null;
         }
     }
 
-    public static Node insert(int position,int val,Node head){
-
-        if(position==0){
-            return insertAtHead(val,head);
+    public static Node create(ArrayList<Integer> v,int i){
+        if(i<v.size()){
+            if(v.get(i)==-1){
+                return null;
+            }
+            Node root = new Node(v.get(i));
+            root.left = create(v,2*i+1);
+            root.right = create(v,2*i+2);
+            return root;
         }
-
-        Node current = head;
-        Node prev = head;
-        Node newNode = new Node(val);
-        for(int i=0;i<position;i++){
-            prev = current;
-            current = current.next;
-        }
-        if(current==null){
-            newNode.prev = prev;
-            prev.next = newNode;
-            return head;
-        }
-
-        newNode.prev = prev;
-        newNode.next = current;
-        prev.next = newNode;
-        current.prev = newNode;
-
-        return head;
-
+        return null;
     }
 
-    public static Node insertAtHead(int val,Node head) {
-        if(head==null){
-            head = new Node(val);
-            return head;
+    public static void lv(Node root){
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+        while(!q.isEmpty()){
+            int n = q.size();
+            while(n>0 && !q.isEmpty()){
+                Node front = q.poll();
+                System.out.print(front.data+" ");
+                if(front.left!=null){
+                    q.offer(front.left);
+                }
+                if (front.right!=null){
+                    q.offer(front.right);
+                }
+
+                n--;
+            }
+            System.out.println();
+
         }
-
-        Node newHead = new Node(val);
-        newHead.next = head;
-        head.prev = newHead;
-        head = newHead;
-
-        return head;
-
     }
 
 
-    public static void print(Node head){
-        while(head!=null){
-            System.out.print(head.data+"->");
-            head=head.next;
-        }
+    public static void in(Node root){
+        if(root==null) return;
 
+        in(root.left);
+        System.out.print(root.data+" ");
+        in(root.right);
     }
-
-
-    public static void main(String[] args) {
-
-//        Scanner sc = new Scanner(System.in);
-
-        Node head = null;
-        head = insert(0,1,head);
-        head = insert(0,-1,head);
-        head = insert(0,3,head);
-        head = insert(0,5,head);
-        head = insert(2,2,head);
-        head = insert(5,100,head);
-        head = insert(5,99,head);
-
-        print(head);
-
-
-
-
+//iterative
+    public static void main(String[] args){
+        Node root = null;
+        ArrayList<Integer> al = new ArrayList<>();
+        al.add(1);
+        al.add(2);
+        al.add(3);
+        al.add(4);
+        al.add(5);
+        al.add(6);
+        al.add(7);
+        root = create(al,0);
+        lv(root);
+        System.out.println();
+        in(root);
     }
 }
