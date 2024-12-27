@@ -49,6 +49,8 @@ public class Test {
     }
 
 
+
+
     public static void in(Node root){
         if(root==null) return;
 
@@ -71,5 +73,10 @@ public class Test {
         lv(root);
         System.out.println();
         in(root);
+
+        String s = "@";
+        char ch = s.charAt(0);
+
+
     }
 }
